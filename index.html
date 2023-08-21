@@ -546,8 +546,7 @@
 							<button class="btn-primary btn primary-btn-style" onclick="sendEmail()" value="submit">Send </button>
 						</div>
 					</form> -->
-
-						<form id="submit-form" name="submit-form" action="" method="post" class="site-form"
+					<form id="submit-form" name="submit-form" action="" method="post" class="site-form"
 						target="form-iframe">
 						<iframe name="form-iframe" style="display:none" frameborder="0"></iframe>
 
@@ -556,7 +555,7 @@
 							<label for="name">Your Name</label>
 							<input type="text" id="name" name="name" class="form-control px-3 py-4"
 								placeholder="Your Name" required>
-								<small id="name-error" style="color: red; display: none;">Invalid name format</small>
+							<small id="name-error" style="color: red; display: none;">Invalid name format</small>
 						</div>
 						<div class="form-group">
 							<label for="email">Your Email</label>
@@ -575,9 +574,11 @@
 							<label for="message">Write a Message</label>
 							<textarea id="message" name="message" class="form-control px-3 py-4" cols="30" rows="10"
 								placeholder="Write a Message" required></textarea>
+								<small id="message-error" style="color: red; display: none;">Message is required</small>
 						</div>
 						<div class="form-group">
-							<button type="button" id="submit-form" class="btn btn-primary px-4 py-3" onclick="validateAndSubmit()">Send
+							<button type="button" id="submit-form" class="btn btn-primary px-4 py-3"
+								onclick="validateAndSubmit()">Send
 								Message</button>
 						</div>
 					</form>
@@ -587,21 +588,25 @@
 							var emailInput = document.getElementById("email");
 							var nameInput = document.getElementById("name");
 							var phoneInput = document.getElementById("phone");
+							var messageInput = document.getElementById("message");// Add this line
+
 							var emailError = document.getElementById("email-error");
 							var phoneError = document.getElementById("phone-error");
 							var nameError = document.getElementById("name-error");
+							var messageError = document.getElementById("message-error");// Add this line
+
 							var isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
 							var isValidPhone = /^\d{10}$/.test(phoneInput.value);
 							var isValidName = /^[a-zA-Z\s]{3,}$/.test(nameInput.value);
+							var isValidMessage = messageInput.value.trim() !== ""; // Add this line
 
 
-					
 							if (!isValidEmail) {
 								emailError.style.display = "block";
 							} else {
 								emailError.style.display = "none";
 							}
-					
+
 							if (!isValidPhone) {
 								phoneError.style.display = "block";
 							} else {
@@ -613,8 +618,14 @@
 							} else {
 								nameError.style.display = "none";
 							}
-					
-							if (isValidEmail && isValidPhone && isValidName) {
+							if (!isValidMessage) {
+								messageError.style.display = "block";
+							} else {
+								messageError.style.display = "none";
+							}
+
+
+							if (isValidEmail && isValidPhone && isValidName && isValidMessage) {
 								// Submit the form using AJAX
 								$.ajax({
 									url: "https://script.google.com/macros/s/AKfycbz6O1KhFA00w4GzDomRLPTVtgaFfShJW_pZY_XjAk7YrvDzW5qzAhMhJ9F_sPfXFhqxgA/exec",
@@ -631,6 +642,9 @@
 							}
 						}
 					</script>
+
+
+
 					
 
 
